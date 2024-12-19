@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Data List</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        h1 {
+            text-align: center;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+        .table-container {
+            overflow-x: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        th {
+            background-color: #333;
+            color: #ffd700;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: rgba(255, 215, 0, 0.1);
+        }
+        .checkbox-true {
+            color: #4CAF50;
+        }
+        .checkbox-false {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>Customer Data</h1>
+    <div class="table-container">
+        <table id="customerTable">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Birth Date</th>
+                    <th>Preferred Contact</th>
+                    <th>Delivery Address</th>
+                    <th>Vegetarian</th>
+                    <th>Gluten Free</th>
+                    <th>Dairy Free</th>
+                    <th>Nut Allergy</th>
+                    <th>Email Newsletter</th>
+                    <th>SMS Offers</th>
+                    <th>Orders</th>
+                    <th>Last Order</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="customerTableBody"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Function to get all customer data
+        function getAllCustomerData() {
+            const customerData = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('customer_')) {
+                    try {
+                        const data = JSON.parse(localStorage.getItem(key));
+                        customerData.push(data);
+                    } catch (e) {
+                        console.error('Error parsing data for key:', key);
+                    }
+                }
+            }
+            return customerData;
+        }
+
+        // Function to display customer data in table
+        function loadCustomerData() {
+            const tableBody = document.getElementById('customerTableBody');
+            const storedData = localStorage.getItem('customerData');
+            
+            if (storedData) {
+                const customerData = JSON.parse(storedData);
+                
+                // Create a table row
+                const row = document.createElement('tr');
+                
+                // Add cells for each piece of data
+                row.innerHTML = `
+                    <td>${customerData.firstName || ''}</td>
+                    <td>${customerData.lastName || ''}</td>
+                    <td>${customerData.email || ''}</td>
+                    <td>${customerData.phone || ''}</td>
+                    <td>${customerData.birthDate || ''}</td>
+                    <td>${customerData.preferredContact || ''}</td>
+                    <td>${customerData.deliveryAddress || ''}</td>
+                    <td class="${customerData.foodPreferences.includes('vegetarian') ? 'checkbox-true' : 'checkbox-false'}">
+                        ${customerData.foodPreferences.includes('vegetarian') ? '✓' : '✕'}
+                    </td>
+                    <td class="${customerData.foodPreferences.includes('glutenFree') ? 'checkbox-true' : 'checkbox-false'}">
+                        ${customerData.foodPreferences.includes('glutenFree') ? '✓' : '✕'}
+                    </td>
+                    <td class="${customerData.foodPreferences.includes('dairyFree') ? 'checkbox-true' : 'checkbox-false'}">
+                        ${customerData.foodPreferences.includes('dairyFree') ? '✓' : '✕'}
+                    </td>
+                    <td class="${customerData.foodPreferences.includes('nutAllergy') ? 'checkbox-true' : 'checkbox-false'}">
+                        ${customerData.foodPreferences.includes('nutAllergy') ? '✓' : '✕'}
+                    </td>
+                    <td class="${customerData.marketingPreferences.includes('emailNewsletter') ? 'checkbox-true' : 'checkbox-false'}">
+                        ${customerData.marketingPreferences.includes('emailNewsletter') ? '✓' : '✕'}
+                    </td>
+                    <td class="${customerData.marketingPreferences.includes('smsOffers') ? 'checkbox-true' : 'checkbox-false'}">
+                        ${customerData.marketingPreferences.includes('smsOffers') ? '✓' : '✕'}
+                    </td>
+                    <td>0</td>
+                    <td>N/A</td>
+                    <td class="status-active">Active</td>
+                `;
+                
+                tableBody.appendChild(row);
+            } else {
+                // If no data is found, display a message
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="16" style="text-align: center;">No customer data found</td>';
+                tableBody.appendChild(row);
+            }
+        }
+
+        // Load data when the page loads
+        window.addEventListener('load', loadCustomerData);
+    </script>
+</body>
+</html>

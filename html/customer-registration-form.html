@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer Registration</title>
+  <style>
+    /* Your existing styles remain unchanged */
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #1a1a1a;
+      color: #ffffff;
+      background-image: url(../img/back2.png);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #ffd700;
+      margin-bottom: 20px;
+    }
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 15px;
+    }
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      flex: 1;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #ffd700;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ffd700;
+      border-radius: 6px;
+      background-color: #333;
+      color: white;
+    }
+    .preference-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+    }
+    .checkbox-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    button {
+      background-color: #ffd700;
+      color: #000;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #ffed4a;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Customer Registration</h1>
+  </div>
+
+  <div class="form-container">
+    <form id="customerForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="firstName">First Name:</label>
+          <input type="text" id="firstName" name="firstName" required>
+        </div>
+        <div class="form-group">
+          <label for="lastName">Last Name:</label>
+          <input type="text" id="lastName" name="lastName" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email Address:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number:</label>
+          <input type="tel" id="phone" name="phone" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="birthDate">Birth Date:</label>
+          <input type="date" id="birthDate" name="birthDate" required>
+        </div>
+        <div class="form-group">
+          <label for="preferredContact">Preferred Contact Method:</label>
+          <select id="preferredContact" name="preferredContact" required>
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+            <option value="sms">SMS</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="deliveryAddress">Delivery Address:</label>
+          <textarea id="deliveryAddress" name="deliveryAddress" required></textarea>
+        </div>
+      </div>
+
+      <h3>Food Preferences:</h3>
+      <div class="preference-grid">
+        <div class="checkbox-item">
+          <input type="checkbox" id="vegetarian" name="foodPreferences" value="vegetarian">
+          <label for="vegetarian">Vegetarian</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="glutenFree" name="foodPreferences" value="glutenFree">
+          <label for="glutenFree">Gluten Free</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="dairyFree" name="foodPreferences" value="dairyFree">
+          <label for="dairyFree">Dairy Free</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="nutAllergy" name="foodPreferences" value="nutAllergy">
+          <label for="nutAllergy">Nut Allergy</label>
+        </div>
+      </div>
+
+      <h3>Marketing Preferences:</h3>
+      <div class="preference-grid">
+        <div class="checkbox-item">
+          <input type="checkbox" id="emailNewsletter" name="marketingPreferences" value="emailNewsletter">
+          <label for="emailNewsletter">Email Newsletter</label>
+        </div>
+        <div class="checkbox-item">
+          <input type="checkbox" id="smsOffers" name="marketingPreferences" value="smsOffers">
+          <label for="smsOffers">SMS Offers</label>
+        </div>
+      </div>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('customerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Get form data
+      const formData = new FormData(e.target);
+      const data = {
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        birthDate: formData.get('birthDate'),
+        preferredContact: formData.get('preferredContact'),
+        deliveryAddress: formData.get('deliveryAddress'),
+        foodPreferences: Array.from(formData.getAll('foodPreferences')),
+        marketingPreferences: Array.from(formData.getAll('marketingPreferences'))
+      };
+      
+      // Store in localStorage
+      localStorage.setItem('customerData', JSON.stringify(data));
+      
+      alert('Registration data has been saved!');
+      
+      // Optional: Display stored data
+      console.log('Stored data:', data);
+    });
+
+    // Load data from localStorage if it exists
+    window.addEventListener('load', function() {
+      const storedData = localStorage.getItem('customerData');
+      if (storedData) {
+        const data = JSON.parse(storedData);
+        const form = document.getElementById('customerForm');
+        
+        // Populate form fields
+        form.firstName.value = data.firstName || '';
+        form.lastName.value = data.lastName || '';
+        form.email.value = data.email || '';
+        form.phone.value = data.phone || '';
+        form.birthDate.value = data.birthDate || '';
+        form.preferredContact.value = data.preferredContact || '';
+        form.deliveryAddress.value = data.deliveryAddress || '';
+        
+        // Checkboxes for food preferences
+        data.foodPreferences.forEach(pref => {
+          const checkbox = form.querySelector(`input[name="foodPreferences"][value="${pref}"]`);
+          if (checkbox) checkbox.checked = true;
+        });
+        
+        // Checkboxes for marketing preferences
+        data.marketingPreferences.forEach(pref => {
+          const checkbox = form.querySelector(`input[name="marketingPreferences"][value="${pref}"]`);
+          if (checkbox) checkbox.checked = true;
+          customerForm.reset();
+        });
+       
+      }
+    });
+    
+  </script>
+</body>
+</html>

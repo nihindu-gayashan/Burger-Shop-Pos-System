@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gourmet Burger Order Form</title>
+    <style>
+        body {
+            background-image: url("../img/back2.png");
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .header img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ffd700;
+            border-radius: 6px;
+            background-color: #333;
+            color: white;
+        }
+        .extras-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .extras-item {
+            display: flex;
+            align-items: center;
+        }
+        .extras-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #ffd700;
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ffed4a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Place Order</h1>
+
+  <form id="burger-order-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone" required>
+
+    <label for="burger-type">Select Your Gourmet Burger:</label>
+    <select id="burger-type" name="burger-type" required>
+      <option value="">Choose your burger</option>
+      <option value="signature-cheese">Signature Cheese Burger - $12.99</option>
+      <option value="bbq-bacon">BBQ Bacon Deluxe - $14.99</option>
+      <option value="mushroom-swiss">Mushroom Swiss - $13.99</option>
+      <option value="veggie">Gourmet Veggie Burger - $11.99</option>
+    </select>
+
+    <label>Customize Your Burger:</label>
+    <label><input type="checkbox" name="extra-cheese" value="true"> Extra Cheese (+$1.50)</label>
+    <label><input type="checkbox" name="extra-bacon" value="true"> Extra Bacon (+$2.00)</label>
+    <label><input type="checkbox" name="add-avocado" value="true"> Add Avocado (+$1.50)</label>
+    <label><input type="checkbox" name="premium-fries" value="true"> Premium Fries (+$3.99)</label>
+
+    <label for="special-instructions">Special Instructions:</label>
+    <textarea id="special-instructions" name="special-instructions"></textarea>
+
+    <button type="submit">Place Order</button>
+  </form>
+
+  <script>
+   const form = document.getElementById('burger-order-form');
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        burgerChoice: form['burger-type'].value,
+        extraCheese: form['extra-cheese'].checked,
+        extraBacon: form['extra-bacon'].checked,
+        addAvocado: form['add-avocado'].checked,
+        premiumFries: form['premium-fries'].checked,
+        specialInstructions: form['special-instructions'].value
+    };
+
+    localStorage.setItem('burgerOrderData', JSON.stringify(formData));
+    alert('Order placed ! ');
+    form.reset();
+});
+  </script>
+</body>
+</html>

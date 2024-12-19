@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Burger Item - Management Form</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            background-image: url(../img/back2.png);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: #ffd700;
+            margin-bottom: 20px;
+        }
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            flex: 1;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ffd700;
+            border-radius: 6px;
+            background-color: #333;
+            color: white;
+        }
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+        }
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #ffd700;
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #ffed4a;
+        }
+        .image-upload {
+            border: 2px dashed #ffd700;
+            padding: 20px;
+            text-align: center;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Add New Burger Item</h1>
+    </div>
+    <div class="form-container">
+        <form id="addBurgerItemForm">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="burgerName">Burger Name:</label>
+                    <input type="text" id="burgerName" name="burgerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price ($):</label>
+                    <input type="number" id="price" name="price" step="0.01" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" rows="3" required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="signature">Signature Burger</option>
+                        <option value="classic">Classic Burger</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="spicy">Spicy</option>
+                        <option value="limited">Limited Edition</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="spicyLevel">Spicy Level:</label>
+                    <select id="spicyLevel" name="spicyLevel">
+                        <option value="0">Not Spicy</option>
+                        <option value="1">Mild</option>
+                        <option value="2">Medium</option>
+                        <option value="3">Hot</option>
+                        <option value="4">Extra Hot</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Ingredients:</label>
+                <div class="ingredients-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="beef" name="ingredients" value="beef">
+                        <label for="beef">Beef Patty</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="chicken" name="ingredients" value="chicken">
+                        <label for="chicken">Chicken Patty</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="veggie" name="ingredients" value="veggie">
+                        <label for="veggie">Veggie Patty</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cheese" name="ingredients" value="cheese">
+                        <label for="cheese">Cheese</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="bacon" name="ingredients" value="bacon">
+                        <label for="bacon">Bacon</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lettuce" name="ingredients" value="lettuce">
+                        <label for="lettuce">Lettuce</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tomato" name="ingredients" value="tomato">
+                        <label for="tomato">Tomato</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="onion" name="ingredients" value="onion">
+                        <label for="onion">Onion</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="pickles" name="ingredients" value="pickles">
+                        <label for="pickles">Pickles</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Special Dietary Options:</label>
+                <div class="ingredients-grid">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="glutenFree" name="dietary" value="glutenFree">
+                        <label for="glutenFree">Gluten Free</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vegan" name="dietary" value="vegan">
+                        <label for="vegan">Vegan</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="halal" name="dietary" value="halal">
+                        <label for="halal">Halal</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="burgerImage">Upload Burger Image:</label>
+                <div class="image-upload">
+                    <input type="file" id="burgerImage" name="burgerImage" accept="image/*">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="prepTime">Preparation Time (minutes):</label>
+                    <input type="number" id="prepTime" name="prepTime" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="calories">Calories:</label>
+                    <input type="number" id="calories" name="calories" required>
+                </div>
+            </div>
+
+            <button type="submit" id="DOMContentLoaded">Add Burger to Menu</button>
+        </form>
+    </div>
+    <script src="../js/item.js"></script>
+</body>
+</html>
